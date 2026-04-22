@@ -5,4 +5,5 @@ const router =Router()
 router.post('/register',AuthController.register)
 router.post('/login',AuthController.login)
 router.get('/jwk.json',AuthController.getJwks)
-export default router
+router.get('well-known/openid-configuration',AuthController.getDiscovery)
+export default router 

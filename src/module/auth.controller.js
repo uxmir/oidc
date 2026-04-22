@@ -42,4 +42,23 @@ const getJwks=async(req,res)=>{
     }
     return res.json(jwts)
 }
-export { register,login,getJwks };
+
+const getDiscovery=async(req,res)=>{
+try {
+  const discovery={
+    issuer:'mir-auth-server',
+    jwks_uri:`${process.env.BASE_URL}/api/auth/jwk.json`,
+    authorization_endpoint:`${process.env.BASE_URL}/o/authenticate/login`,
+    response_types_supported:["id_token"],
+    subject_types_supported:["public"],
+    id_token_signing_alg_values_supported:["RS256"],
+  }
+  return res.status(200).json(discovery)
+} catch (error) {
+      return res.status(500).json({
+      success: false,
+      message: "internal server error",
+    });
+}
+}
+export { register,login,getJwks,getDiscovery };
